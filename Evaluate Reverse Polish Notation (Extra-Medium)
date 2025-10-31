@@ -1,0 +1,33 @@
+Evaluate Reverse Polish Notation (Leetcode)
+https://leetcode.com/problems/evaluate-reverse-polish-notation/description/
+
+//Code passes all test cases in Leetcode
+
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<int> s;
+        for(auto &o : tokens){
+            if(o == "+" || o == "-" || o == "*" || o == "/"){
+                int b = s.top(); s.pop();
+                int a = s.top(); s.pop();
+                if(o == "+"){
+                    s.push(a+b);
+                }
+                else if(o == "-"){
+                    s.push(a-b);
+                }
+                else if(o == "*"){
+                    s.push(a*b);
+                }
+                else{
+                    s.push(a/b);
+                }
+            }
+            else{
+                s.push(stoi(o));
+            }
+        }
+        return s.top();
+    }
+};
