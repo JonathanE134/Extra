@@ -1,0 +1,41 @@
+Word Ladder (Leetcode)
+https://leetcode.com/problems/word-ladder/description/
+
+//Code passes all test cases in Leetcode
+
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> words(wordList.begin(), wordList.end());
+
+        if(words.find(endWord) == words.end()){return 0;}
+
+        queue<string> q;
+        unordered_map<string, int> distance;
+        q.push(beginWord);
+        distance[beginWord] = 1;
+
+        while(!q.empty()){
+            string curr = q.front();
+            int currD = distance[curr];
+            q.pop();
+
+            if(curr == endWord){return currD;}
+
+            for(int i = 0; i < curr.length(); i++){
+                for(char c = 'a'; c <= 'z'; c++){
+                    if(c == curr[i]){continue;}
+
+                    string nWord = curr;
+                    nWord[i] = c;
+
+                    if(words.find(nWord) != words.end() && distance.find(nWord) == distance.end()){
+                        distance[nWord] = currD + 1;
+                        q.push(nWord);
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+};
